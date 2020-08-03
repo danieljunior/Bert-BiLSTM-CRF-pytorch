@@ -19,13 +19,20 @@ from pytorch_pretrained_bert import BertTokenizer
 
 logger = logging.getLogger(__name__)
 
-bert_model = '/root/workspace/qa_project/chinese_L-12_H-768_A-12'
-tokenizer = BertTokenizer.from_pretrained(bert_model)
-# VOCAB = ('<PAD>', 'O', 'I-LOC', 'B-PER', 'I-PER', 'I-ORG', 'B-LOC', 'B-ORG')
-VOCAB = ('<PAD>', '[CLS]', '[SEP]', 'O', 'B-INF', 'I-INF', 'B-PAT', 'I-PAT', 'B-OPS', 
-        'I-OPS', 'B-DSE', 'I-DSE', 'B-DRG', 'I-DRG', 'B-LAB', 'I-LAB')
-tag2idx = {tag: idx for idx, tag in enumerate(VOCAB)}
-idx2tag = {idx: tag for idx, tag in enumerate(VOCAB)}
+tokenizer = BertTokenizer.from_pretrained('vocab.txt', do_lower_case=False)
+
+def get_labels():
+    resp = ["<PAD>", "[CLS]", "[SEP]", "O"]
+    with open("tags.txt") as tags:
+        for line in tags:
+            tag = line.strip('\n')
+            resp.append("B-"+tag)    
+            resp.append("I-"+tag)    
+    resp = list(set(resp))
+    return resp
+
+tag2idx = {tag: idx for idx, tag in enumerate(get_labels())}
+idx2tag = {idx: tag for idx, tag in enumerate(get_labels)}
 MAX_LEN = 256 - 2
 
 

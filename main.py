@@ -9,7 +9,7 @@ import argparse
 from torch.utils import data
 from model import Net
 from crf import Bert_BiLSTM_CRF
-from utils import NerDataset, pad, VOCAB, tokenizer, tag2idx, idx2tag
+from utils import NerDataset, pad, tokenizer, tag2idx, idx2tag
 
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '1'
@@ -130,8 +130,8 @@ if __name__=="__main__":
     parser.add_argument("--finetuning", dest="finetuning", action="store_true")
     parser.add_argument("--top_rnns", dest="top_rnns", action="store_true")
     parser.add_argument("--logdir", type=str, default="checkpoints/01")
-    parser.add_argument("--trainset", type=str, default="processed/processed_training_bio.txt")
-    parser.add_argument("--validset", type=str, default="processed/processed_dev_bio.txt")
+    parser.add_argument("--trainset", type=str, default="lener/train.txt")
+    parser.add_argument("--validset", type=str, default="lener/validation.txt")
     hp = parser.parse_args()
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
