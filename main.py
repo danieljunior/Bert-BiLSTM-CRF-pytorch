@@ -12,7 +12,8 @@ from crf import Bert_BiLSTM_CRF
 from utils import NerDataset, pad, tokenizer, tag2idx, idx2tag
 
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+os.environ['CUDA_LAUNCH_BLOCKING'] = '1'
 
 
 def train(model, iterator, optimizer, criterion, device):

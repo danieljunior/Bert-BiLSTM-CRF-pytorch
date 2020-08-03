@@ -32,7 +32,7 @@ def get_labels():
     return resp
 
 tag2idx = {tag: idx for idx, tag in enumerate(get_labels())}
-idx2tag = {idx: tag for idx, tag in enumerate(get_labels)}
+idx2tag = {idx: tag for idx, tag in enumerate(get_labels())}
 MAX_LEN = 256 - 2
 
 
