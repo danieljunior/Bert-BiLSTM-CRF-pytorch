@@ -104,6 +104,7 @@ class Bert_BiLSTM_CRF(nn.Module):
         x: [batchsize, sent_len]
         enc: [batch_size, sent_len, 768]
         """
+        import pdb; pdb.set_trace()
         with torch.no_grad():
             encoded_layer, _  = self.bert(x)
             enc = encoded_layer[-1]
