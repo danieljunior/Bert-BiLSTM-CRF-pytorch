@@ -5,13 +5,18 @@ USER root
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 ENV PATH /opt/conda/bin:$PATH
 
-RUN apt-get update && apt-get install -y software-properties-common && \
-    add-apt-repository ppa:deadsnakes/ppa && apt-get update --fix-missing &&\
-    apt-get install -y python3.6 \
-    curl bzip2 ca-certificates gcc g++ nano cython build-essential \
-    libglib2.0-0 libxext6 libsm6 libxrender1 git
+RUN apt-get update --fix-missing && \
+    apt-get install -y wget bzip2 ca-certificates \
+    gcc g++ nano cython build-essential \
+    libglib2.0-0 libxext6 libsm6 libxrender1 \
+    git 
 
-RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python get-pip.py
+RUN wget --quiet https://repo.anaconda.com/archive/Anaconda3-2020.07-Linux-x86_64.sh -O ~/anaconda.sh && \
+    /bin/bash ~/anaconda.sh -b -p /opt/conda && \
+    rm ~/anaconda.sh && \
+    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
+    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
+    echo "source activate base" > ~/.bashrc
 
 RUN mkdir -p /app
 WORKDIR /app
